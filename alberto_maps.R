@@ -48,6 +48,9 @@ combined_fortified$District <- factor(combined_fortified$District,
 # Get africa shapefile
 africa <- readOGR('africa_shapefile', 'africa_shapefile')
 
+# Subset South Africa
+sa <- africa[africa@data$COUNTRY == 'South Africa',]
+
 pdf('maps.pdf', width = 11, height = 8.5)
 par(mfrow = c(1, 3))
 par(mar = c(0,0,0,0))
@@ -66,4 +69,17 @@ plot(maputo, col = 'grey', border = 'white', lwd = 0.1)
 plot(manhica, add = TRUE, col = adjustcolor('darkgreen', alpha.f = 0.7), border = NA)
 plot(magude, add = TRUE, col = adjustcolor('darkred', alpha.f = 0.7), border = NA)
 
+dev.off()
+
+pdf('moz_and_za.pdf', width = 11, height = 8.5)
+plot(africa, col = 'grey', border = 'white', lwd = 0.1)
+plot(moz, add = TRUE, col = adjustcolor('darkorange', alpha.f = 0.7), border = NA)
+plot(sa, add = TRUE, col = adjustcolor('darkgreen', alpha.f = 0.7), border = NA)
+dev.off()
+
+
+png('moz_and_za.png')
+plot(africa, col = 'grey', border = 'white', lwd = 0.1)
+plot(moz, add = TRUE, col = adjustcolor('darkorange', alpha.f = 0.7), border = NA)
+plot(sa, add = TRUE, col = adjustcolor('darkgreen', alpha.f = 0.7), border = NA)
 dev.off()
