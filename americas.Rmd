@@ -1,0 +1,142 @@
+---
+title: "Americas maps for Alberto"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+options(scipen=999)
+
+library(knitr)
+# Basic knitr options
+opts_chunk$set(comment = NA, 
+               echo = FALSE, 
+               warning = FALSE, 
+               message = FALSE, 
+               error = TRUE, 
+               cache = F,
+               fig.width = 7,
+               fig.height = 5,
+               fig.path = 'figs/')
+knit_engines$set(asis = function(options) {
+  if (options$echo && options$eval) knit_child(text = options$code)
+})
+```
+
+```{r}
+library(leaflet)
+library(leaflet.extras)
+library(sp)
+library(raster)
+library(ggmap)
+library(dplyr)
+library(maptools)
+library(rgdal)
+library(RColorBrewer)
+library(googlesheets)
+library(knitr)
+library(tidyr)
+library(databrew)
+library(nepal)
+library(rasterVis)
+```
+
+
+```{r}
+
+WorldData <- map_data('world')
+WorldData %>% filter(region != "Antarctica") -> WorldData
+WorldData <- fortify(WorldData)
+world_data <- WorldData %>%
+  group_by(region) %>%
+  mutate(centroid_x = mean(long),
+         centroid_y = mean(lat)) %>%
+  ungroup %>%
+  filter(centroid_x <= -50)
+
+countries <- c('Paraguay','Haiti','Argentina')
+sub_world <- world_data %>%
+  filter(region %in% countries)
+
+ggplot() +
+  geom_polygon(data = world_data,
+               aes(x = long,
+                   y = lat,
+                   group = group),
+               fill = 'black') +
+  geom_polygon(data = sub_world,
+               aes(x = long,
+                   y = lat,
+                   group = group),
+               fill = 'red',
+               color = 'black',
+               size = 0.5) +
+  geom_polygon(data = sub_world %>% filter(region == 'Haiti'),
+               aes(x = long,
+                   y = lat,
+                   group = group),
+               fill = 'red',
+               color = 'black',
+               size = 0.02) +
+  xlim(-170, -30) +
+  coord_map() +
+  ggthemes::theme_map()
+```
+
+\newpage
+
+```{r}
+i = 1
+sub_country <- world_data%>%
+  filter(region == countries[i])
+g <- ggplot() +
+  geom_polygon(data = sub_country,
+               aes(x = long,
+                   y = lat,
+                   group = group),
+               fill = 'black',
+               color = 'black',
+               alpha = 0.7) +
+  coord_map() +
+  ggthemes::theme_map()
+print(g)
+```
+
+\newpage
+
+
+```{r}
+i = 2
+sub_country <- world_data%>%
+  filter(region == countries[i])
+g <- ggplot() +
+  geom_polygon(data = sub_country,
+               aes(x = long,
+                   y = lat,
+                   group = group),
+               fill = 'black',
+               color = 'black',
+               alpha = 0.7) +
+  coord_map() +
+  ggthemes::theme_map()
+print(g)
+```
+
+\newpage
+
+
+```{r}
+i = 3
+sub_country <- world_data%>%
+  filter(region == countries[i])
+g <- ggplot() +
+  geom_polygon(data = sub_country,
+               aes(x = long,
+                   y = lat,
+                   group = group),
+               fill = 'black',
+               color = 'black',
+               alpha = 0.7) +
+  coord_map() +
+  ggthemes::theme_map()
+print(g)
+```
