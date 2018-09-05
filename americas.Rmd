@@ -80,6 +80,8 @@ ggplot() +
   xlim(-170, -30) +
   coord_map() +
   ggthemes::theme_map()
+ggsave('figs/countries.png')
+
 ```
 
 \newpage
@@ -99,6 +101,7 @@ g <- ggplot() +
   coord_map() +
   ggthemes::theme_map()
 print(g)
+ggsave('figs/country1.png')
 ```
 
 \newpage
@@ -119,6 +122,7 @@ g <- ggplot() +
   coord_map() +
   ggthemes::theme_map()
 print(g)
+ggsave('figs/country2.png')
 ```
 
 \newpage
@@ -139,4 +143,6 @@ g <- ggplot() +
   coord_map() +
   ggthemes::theme_map()
 print(g)
+ggsave('figs/country3.png')
+
 ```
